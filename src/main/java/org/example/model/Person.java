@@ -11,8 +11,8 @@ public class Person {
 
     @Id
     @Column(name = "id")
-    // hibernate doesn't think about this field. Values generate on Postgres side
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator_person")
+    @SequenceGenerator(name = "seq_generator_person", sequenceName = "person_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "name")
@@ -21,7 +21,8 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    public Person() {}
+    public Person() {
+    }
 
     public Person(String name, int age) {
         this.id = id;
