@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 /**
  * Hello world!
  */
@@ -17,11 +19,8 @@ public class App {
 
         try {
             session.beginTransaction();
-            // after we save smth into DB. We often need to get id. Here's the code how to do it.
-            Person person = new Person("Some name", 60);
-            session.save(person);
 
-            System.out.println(person.getId());
+            session.createQuery("delete Person where age < 30").executeUpdate();
 
             session.getTransaction().commit();
 
