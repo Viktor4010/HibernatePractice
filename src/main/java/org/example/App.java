@@ -17,9 +17,11 @@ public class App {
 
         try {
             session.beginTransaction();
+            // after we save smth into DB. We often need to get id. Here's the code how to do it.
+            Person person = new Person("Some name", 60);
+            session.save(person);
 
-            Person person = session.get(Person.class, 2);
-            session.delete(person);
+            System.out.println(person.getId());
 
             session.getTransaction().commit();
 
