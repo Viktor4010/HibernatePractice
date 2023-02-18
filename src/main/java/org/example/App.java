@@ -1,10 +1,13 @@
 package org.example;
 
+import org.example.model.Item;
 import org.example.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,20 +15,30 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration().addAnnotatedClass(Person.class);
+        try (SessionFactory sessionFactory = new Configuration()
+                .addAnnotatedClass(Person.class)
+                .addAnnotatedClass(Item.class)
+                .buildSessionFactory();
+             Session session = sessionFactory.getCurrentSession()) {
 
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-
-        try {
             session.beginTransaction();
 
-            session.createQuery("delete Person where age < 30").executeUpdate();
+            // Perform database operations here
+            Person person = session.get(Person.class, 4);
+
+            Item item = session.get(Item.class, 1);
+            item.getOwner().getItems().remove(item);
+
+            // sql
+            item.setOwner(person);
+
+
+            person.getItems().add(item);
 
             session.getTransaction().commit();
-
-        } finally {
-            sessionFactory.close();
+        } catch (Exception e) {
+            // Handle exceptions here
         }
     }
 }
+
