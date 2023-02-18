@@ -22,11 +22,11 @@ public class App {
             session.beginTransaction();
 
             // Perform database operations here
-            Person person = session.get(Person.class, 3);
-            System.out.println(person);
+            Item item = session.get(Item.class, 5);
+            System.out.println(item);
 
-            List<Item> items = person.getItems();
-            System.out.println(items);
+            Person person = item.getOwner();
+            System.out.println(person);
 
             session.getTransaction().commit();
         } catch (Exception e) {
