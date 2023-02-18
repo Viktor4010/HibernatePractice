@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,15 +24,14 @@ public class App {
             session.beginTransaction();
 
             // Perform database operations here
-            Person person = session.get(Person.class, 2);
+            Person person = new Person("Test person", 30);
 
-            Item newItem = new Item("Item from Hibernate", person);
+            Item newItem = new Item("Item from hibernate 2", person);
 
-            // make mutal relations
-            // this line does not make any sql queries.
-            // It is a good practice and help hibernate save actual cash
-            person.getItems().add(newItem);
+            person.setItems(new ArrayList<>(Collections.singletonList(newItem)));
 
+
+            session.save(person);
             session.save(newItem);
 
             session.getTransaction().commit();
