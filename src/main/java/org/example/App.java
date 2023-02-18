@@ -24,15 +24,16 @@ public class App {
             session.beginTransaction();
 
             // Perform database operations here
-            Person person = new Person("Test person", 30);
+            Person person = session.get(Person.class, 3);
 
-            Item newItem = new Item("Item from hibernate 2", person);
+            List<Item> items = person.getItems();
 
-            person.setItems(new ArrayList<>(Collections.singletonList(newItem)));
+            // порождает sql
+            for (Item item : items)
+                session.remove(item);
 
-
-            session.save(person);
-            session.save(newItem);
+            // не порождает sql, но необходимо для того, чтобы в кэше всё было верно
+            person.getItems().clear();
 
             session.getTransaction().commit();
         } catch (Exception e) {
