@@ -24,13 +24,16 @@ public class App {
             session.beginTransaction();
 
             // Perform database operations here
-            Person person = session.get(Person.class, 2);
+            Person person = session.get(Person.class, 4);
+
+            Item item = session.get(Item.class, 1);
+            item.getOwner().getItems().remove(item);
 
             // sql
-            session.remove(person);
+            item.setOwner(person);
 
-            // correct hibernate cash
-            person.getItems().forEach(i -> i.setOwner(null));
+
+            person.getItems().add(item);
 
             session.getTransaction().commit();
         } catch (Exception e) {
