@@ -21,12 +21,30 @@ public class App {
 
             // Perform database operations here
 
-            Person person = new Person("Test Person2", 50);
-            Passport passport = new Passport(person, 56789);
 
-            person.setPassport(passport);
+//            // save
+//            Person person = new Person("Test Person3", 50);
+//            Passport passport = new Passport( 9876);
+//
+//            person.setPassport(passport);
+//
+//            session.save(person);
+//
+//            // get
+//            Person person2 = session.get(Person.class, 1);
+//            System.out.println(person.getPassport().getPassportNumber());
+//
+//            Passport passport3 = session.get(Passport.class, 2);
+//            System.out.println(passport.getPerson().getName());
+//
+//            // update
+//            Person person = session.get(Person.class, 3);
+//            person.getPassport().setPassportNumber(77777);
 
-            session.save(person);
+//            //delete
+//
+//            Person person = session.get(Person.class, 2);
+//            session.remove(person);
 
             session.getTransaction().commit();
         } catch (Exception e) {
