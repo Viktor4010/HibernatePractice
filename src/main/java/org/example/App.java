@@ -22,18 +22,15 @@ public class App {
              Session session = sessionFactory.getCurrentSession()) {
 
             session.beginTransaction();
-
             // Perform database operations here
-            Person person = session.get(Person.class, 4);
+            Person person = new Person("Test cascading", 30);
 
-            Item item = session.get(Item.class, 1);
-            item.getOwner().getItems().remove(item);
+            Item item = new Item("Test cascading item",person);
 
-            // sql
-            item.setOwner(person);
+            person.setItems(new ArrayList<>(Collections.singletonList(item)));
 
+            session.persist(person);
 
-            person.getItems().add(item);
 
             session.getTransaction().commit();
         } catch (Exception e) {
