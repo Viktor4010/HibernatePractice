@@ -23,13 +23,17 @@ public class App {
 
             session.beginTransaction();
             // Perform database operations here
-            Person person = new Person("Test cascading", 30);
+            Person person = new Person("Test cascading3", 30);
 
-            Item item = new Item("Test cascading item",person);
+            Item item4 = new Item("Test cascading item4");
+            Item item5 = new Item("Test cascading item5");
+            Item item6 = new Item("Test cascading item6");
 
-            person.setItems(new ArrayList<>(Collections.singletonList(item)));
+            person.addItem(item4);
+            person.addItem(item5);
+            person.addItem(item6);
 
-            session.persist(person);
+            session.save(person);
 
 
             session.getTransaction().commit();
