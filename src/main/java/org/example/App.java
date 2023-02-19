@@ -1,14 +1,10 @@
 package org.example;
 
-import org.example.model.Item;
+import org.example.model.Passport;
 import org.example.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Hello world!
@@ -17,23 +13,20 @@ public class App {
     public static void main(String[] args) {
         try (SessionFactory sessionFactory = new Configuration()
                 .addAnnotatedClass(Person.class)
-                .addAnnotatedClass(Item.class)
+                .addAnnotatedClass(Passport.class)
                 .buildSessionFactory();
              Session session = sessionFactory.getCurrentSession()) {
 
             session.beginTransaction();
 
             // Perform database operations here
-            Person person = session.get(Person.class, 4);
 
-            Item item = session.get(Item.class, 1);
-            item.getOwner().getItems().remove(item);
+            Person person = new Person("Test Person2", 50);
+            Passport passport = new Passport(person, 56789);
 
-            // sql
-            item.setOwner(person);
+            person.setPassport(passport);
 
-
-            person.getItems().add(item);
+            session.save(person);
 
             session.getTransaction().commit();
         } catch (Exception e) {
